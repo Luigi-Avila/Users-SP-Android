@@ -18,13 +18,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = UserAdapter(mutableListOf())
+        userAdapter = UserAdapter(getUsers())
         linearLayout = LinearLayoutManager(this)
 
         binding.recyclerView.apply {
             layoutManager = linearLayout
             adapter = userAdapter
         }
+    }
 
+    private fun getUsers(): List<User>{
+        val users = mutableListOf<User>()
+
+        users.add(User(id = 1, name = "Luigi", lastName = "Avila", url = ""))
+        users.add(User(id = 2, name = "Leo", lastName = "LeetCode", url = ""))
+        users.add(User(id = 3, name = "Miguel", lastName = "LeetCode", url = ""))
+
+        return users
     }
 }
