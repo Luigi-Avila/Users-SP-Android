@@ -3,8 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/common_padding_default">
+    android:layout_height="@dimen/card_height"
+    >
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="@dimen/card_img_size"
+        android:layout_height="@dimen/card_img_size"
+        android:contentDescription="@string/description_user_photo"
+        android:layout_margin="@dimen/common_padding_min"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <TextView
         android:id="@+id/tvOrder"
@@ -19,9 +30,10 @@
         android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_padding_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvOrder"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgPhoto"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="nombre completo" />
 
