@@ -3,11 +3,12 @@ package com.example.userssp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userssp.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var userAdapter: UserAdapter
     private lateinit var linearLayout: RecyclerView.LayoutManager
@@ -18,10 +19,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = UserAdapter(getUsers())
+        //this is about comunnication between adapter and activity
+        userAdapter = UserAdapter(getUsers(), this)
+
         linearLayout = LinearLayoutManager(this)
 
         binding.recyclerView.apply {
+            // this is about optimization of recyclerview because we have a fix value
+            setHasFixedSize(true)
             layoutManager = linearLayout
             adapter = userAdapter
         }
@@ -62,5 +67,10 @@ class MainActivity : AppCompatActivity() {
         users.add(rosa)
 
         return users
+    }
+
+    // this function extend from interface created
+    override fun onClick(user: User, position: Int) {
+        Toast.makeText(this, "$position : ${user.getFullName()}", Toast.LENGTH_SHORT).show()
     }
 }
