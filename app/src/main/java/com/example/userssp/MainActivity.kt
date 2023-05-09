@@ -2,6 +2,7 @@ package com.example.userssp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //PREFERENCES
+        val preferences = getPreferences(MODE_PRIVATE)
+        val firstTime = preferences.getBoolean(getString(R.string.sp_first_time), false)
+        Log.i("SP", "${getString(R.string.sp_first_time)} = $firstTime")
+        //PREFERENCES
 
         //this is about comunnication between adapter and activity
         userAdapter = UserAdapter(getUsers(), this)
