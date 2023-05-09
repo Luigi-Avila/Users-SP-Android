@@ -22,8 +22,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         //PREFERENCES
         val preferences = getPreferences(MODE_PRIVATE)
-        val firstTime = preferences.getBoolean(getString(R.string.sp_first_time), false)
+        val firstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i("SP", "${getString(R.string.sp_first_time)} = $firstTime")
+
+        //SET VALUE IN PREFERENCES
+        preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+
         //PREFERENCES
 
         //this is about comunnication between adapter and activity
