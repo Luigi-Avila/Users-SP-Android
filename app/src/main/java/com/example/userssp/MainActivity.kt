@@ -1,5 +1,6 @@
 package com.example.userssp
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userssp.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
@@ -26,7 +28,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         Log.i("SP", "${getString(R.string.sp_first_time)} = $firstTime")
 
         //SET VALUE IN PREFERENCES
-        preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+        if(firstTime){
+            MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.dialog_title))
+                .setPositiveButton(getString(R.string.dialog_confirm)) { dialog, which ->
+                    preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+                }
+                .show()
+        }
 
         //PREFERENCES
 

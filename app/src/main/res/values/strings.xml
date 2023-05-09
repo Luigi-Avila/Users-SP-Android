@@ -2,4 +2,6 @@
     <string name="app_name">Users SP</string>
     <string name="description_user_photo">user image photo</string>
     <string name="sp_first_time">first_time</string>
+    <string name="dialog_title">Registro</string>
+    <string name="dialog_confirm">Registrarse</string>
 </resources>
