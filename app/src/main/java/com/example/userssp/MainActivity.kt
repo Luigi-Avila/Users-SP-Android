@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userssp.databinding.ActivityMainBinding
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         //SET VALUE IN PREFERENCES
         val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
 
+        Log.i("SP", "Valor de first time $firstTime")
+
         if (firstTime) {
 
             // Basic usage of alert dialog
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setView(dialogView)
                 .setCancelable(false)
                 .setNeutralButton(getString(R.string.dialog_user_guest), null)
-                .setPositiveButton(getString(R.string.dialog_confirm), null)
+                .setPositiveButton(getString(R.string.dialog_confirm)) { _, _ -> }
                 .create()
 
             dialog.show()
@@ -76,11 +79,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 val username = etUserName.text.toString()
                 if (username.isBlank()) {
                     etUserName.setText("")
-                    Toast.makeText(this, getString(R.string.register_invalid), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.register_invalid), Toast.LENGTH_SHORT)
+                        .show()
                 } else {
+                    Log.i("SP", "Se guarda el nombre de $username")
                     with(preferences.edit()) {
                         putBoolean(getString(R.string.sp_first_time), false)
                         putString(getString(R.string.sp_username), username)
+                            .apply()
                     }
                     Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT)
                         .show()
@@ -109,9 +115,26 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             layoutManager = linearLayout
             adapter = userAdapter
         }
+
+        // configuration about swipe to left to delete user
+        val swipeHelper =
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                   userAdapter.remove(viewHolder.adapterPosition)
+                }
+
+            })
+        swipeHelper.attachToRecyclerView(binding.recyclerView)
     }
 
-    private fun getUsers(): List<User> {
+    private fun getUsers(): MutableList<User> {
         val users = mutableListOf<User>()
 
         val luigi = User(
