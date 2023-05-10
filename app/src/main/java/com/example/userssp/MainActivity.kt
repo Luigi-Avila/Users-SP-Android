@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setTitle(getString(R.string.dialog_title))
                 .setView(dialogView)
                 .setCancelable(false)
+                .setNeutralButton(getString(R.string.dialog_user_guest), null)
                 .setPositiveButton(getString(R.string.dialog_confirm)) { dialog, which ->
                     val username =
                         dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
