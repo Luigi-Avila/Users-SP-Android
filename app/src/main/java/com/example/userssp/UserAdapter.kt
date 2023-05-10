@@ -24,10 +24,11 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
+        val humanPosition = position + 1
         with(holder){
             //This setListener is of view holder
-            setListener(user, position + 1)
-            binding.tvOrder.text = (position + 1).toString()
+            setListener(user, humanPosition)
+            binding.tvOrder.text = (humanPosition).toString()
             binding.tvName.text = user.getFullName()
             Glide.with(context)
                 .load(user.url)

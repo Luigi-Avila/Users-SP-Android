@@ -1,10 +1,8 @@
 package com.example.userssp
 
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setView(dialogView)
                 .setCancelable(false)
                 .setNeutralButton(getString(R.string.dialog_user_guest), null)
-                .setPositiveButton(getString(R.string.dialog_confirm)) { dialog, which ->
+                .setPositiveButton(getString(R.string.dialog_confirm)) { _, _ ->
                     val username =
                         dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
                     with(preferences.edit()) {
