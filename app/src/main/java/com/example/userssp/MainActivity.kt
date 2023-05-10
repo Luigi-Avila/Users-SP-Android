@@ -1,5 +1,6 @@
 package com.example.userssp
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
 
         if (firstTime) {
-            MaterialAlertDialogBuilder(this)
+
+            // Basic usage of alert dialog
+            /*MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_title))
                 .setView(dialogView)
                 .setCancelable(false)
@@ -55,6 +58,36 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                         .show()
                 }
                 .show()
+             */
+
+            // Alert dialog with validation
+            val dialog = MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.dialog_title))
+                .setView(dialogView)
+                .setCancelable(false)
+                .setNeutralButton(getString(R.string.dialog_user_guest), null)
+                .setPositiveButton(getString(R.string.dialog_confirm), null)
+                .create()
+
+            dialog.show()
+
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+                val etUserName = dialogView.findViewById<TextInputEditText>(R.id.etUsername)
+                val username = etUserName.text.toString()
+                if (username.isBlank()) {
+                    etUserName.setText("")
+                    Toast.makeText(this, getString(R.string.register_invalid), Toast.LENGTH_SHORT).show()
+                } else {
+                    with(preferences.edit()) {
+                        putBoolean(getString(R.string.sp_first_time), false)
+                        putString(getString(R.string.sp_username), username)
+                    }
+                    Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT)
+                        .show()
+                    dialog.dismiss()
+                }
+            }
+
         } else {
             val username = preferences.getString(
                 getString(R.string.sp_username),
