@@ -52,8 +52,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                         putBoolean(getString(R.string.sp_first_time), false)
                         putString(getString(R.string.sp_username), username).apply()
                     }
+                    Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT)
+                        .show()
                 }
                 .show()
+        } else {
+            val username = preferences.getString(
+                getString(R.string.sp_username),
+                getString(R.string.hint_username)
+            )
+            Toast.makeText(this, "Bienvenido $username", Toast.LENGTH_SHORT).show()
         }
 
         //PREFERENCES
